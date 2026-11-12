@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'post_list_screen.dart';
 import '../utils/validators.dart';
 import 'user_list_screen.dart';
 
@@ -48,12 +49,19 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton.icon(
               onPressed: () => Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => const UserListScreen(),
-                ),
+                MaterialPageRoute(builder: (_) => const UserListScreen()),
               ),
               icon: const Icon(Icons.people),
               label: const Text('Daftar Pengguna (UserRepository)'),
+            ),
+            const SizedBox(height: 8),
+            ElevatedButton.icon(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const PostListScreen()),
+              ),
+              icon: const Icon(Icons.article),
+              label: const Text('Daftar Post (PostRepository)'),
             ),
             const Divider(height: 32),
             const Text(
