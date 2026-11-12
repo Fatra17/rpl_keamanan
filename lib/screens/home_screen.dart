@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'post_list_screen.dart';
 import '../utils/validators.dart';
 import 'user_list_screen.dart';
+import 'post_list_screen.dart';
 
-/// Halaman utama aplikasi.
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -15,12 +14,18 @@ class _HomeScreenState extends State<HomeScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _urlController = TextEditingController();
+  final _passwordController = TextEditingController();
   String _result = '';
 
   @override
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
+    _phoneController.dispose();
+    _urlController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
@@ -28,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (_formKey.currentState!.validate()) {
       final sanitizedName = Validators.sanitize(_nameController.text);
       setState(() {
-        _result = 'Valid! Nama tersanitasi: $sanitizedName';
+        _result = 'Semua input valid! Nama tersanitasi: $sanitizedName';
       });
     }
   }
@@ -65,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const Divider(height: 32),
             const Text(
-              'Uji Validasi & Sanitasi Dasar',
+              'Uji Validasi Ketat & Sanitasi (Latihan 3)',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
@@ -91,12 +96,41 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     validator: Validators.validateEmail,
                   ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: _phoneController,
+                    keyboardType: TextInputType.phone,
+                    decoration: const InputDecoration(
+                      labelText: 'Nomor Telepon (10-13 digit)',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: Validators.validatePhone,
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: _urlController,
+                    decoration: const InputDecoration(
+                      labelText: 'URL (http:// atau https://)',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: Validators.validateUrl,
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Password (Min 8 char, Kapital, Angka, Simbol)',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: Validators.validatePassword,
+                  ),
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: _submit,
-                      child: const Text('Validasi Input'),
+                      child: const Text('Validasi Semua Input'),
                     ),
                   ),
                 ],

@@ -63,4 +63,47 @@ class Validators {
     }
     return null;
   }
+  /// Memvalidasi nomor telepon (hanya angka, 10-13 digit).
+  static String? validatePhone(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Nomor telepon tidak boleh kosong';
+    }
+    final regex = RegExp(r'^[0-9]{10,13}$');
+    if (!regex.hasMatch(value.trim())) {
+      return 'Nomor telepon harus berupa 10-13 digit angka';
+    }
+    return null;
+  }
+
+  /// Memvalidasi URL (harus dimulai dengan http:// atau https://).
+  static String? validateUrl(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'URL tidak boleh kosong';
+    }
+    final regex = RegExp(r'^https?:\/\/[^\s/$.?#].[^\s]*$', caseSensitive: false);
+    if (!regex.hasMatch(value.trim())) {
+      return 'URL harus dimulai dengan http:// atau https://';
+    }
+    return null;
+  }
+
+  /// Memvalidasi password (minimal 8 karakter, mengandung huruf kapital, angka, dan simbol).
+  static String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password tidak boleh kosong';
+    }
+    if (value.length < 8) {
+      return 'Password minimal 8 karakter';
+    }
+    if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      return 'Password harus mengandung huruf kapital';
+    }
+    if (!RegExp(r'[0-9]').hasMatch(value)) {
+      return 'Password harus mengandung angka';
+    }
+    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>_\-+=/\\]').hasMatch(value)) {
+      return 'Password harus mengandung simbol';
+    }
+    return null;
+  }
 }

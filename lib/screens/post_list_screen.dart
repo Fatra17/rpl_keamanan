@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/post.dart';
 import '../repositories/post_repository.dart';
 import '../repositories/post_repository_impl.dart';
+import '../config/dependency_injector.dart';
 
 /// Halaman untuk menampilkan daftar post menggunakan [PostRepository].
 class PostListScreen extends StatefulWidget {
@@ -14,18 +15,22 @@ class PostListScreen extends StatefulWidget {
 }
 
 class _PostListScreenState extends State<PostListScreen> {
-  late final PostRepository _repository;
+  late PostRepository _repository;
+  bool _isInitialized = false;
   List<Post> _posts = [];
   bool _isLoading = true;
   String? _errorMessage;
 
   @override
-  void initState() {
-    super.initState();
-    _repository = widget.repository ?? PostRepositoryImpl();
-    _loadPosts();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInitialized) {
+      _repository =
+          widget.repository ?? DependencyProvider.of(context).postRepository;
+      _isInitialized = true;
+      _loadPosts(); 
+    }
   }
-
   Future<void> _loadPosts() async {
     setState(() {
       _isLoading = true;

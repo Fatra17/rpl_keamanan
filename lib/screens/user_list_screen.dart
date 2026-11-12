@@ -19,17 +19,22 @@ class UserListScreen extends StatefulWidget {
 }
 
 class _UserListScreenState extends State<UserListScreen> {
-  late final UserRepository _repository;
+  late UserRepository _repository;
+  bool _isInitialized = false;
   List<User> _users = [];
   bool _isLoading = true;
   String? _errorMessage;
 
   @override
-  void initState() {
-    super.initState();
-    _repository = widget.repository ?? UserRepositoryImpl();
+  void didChangeDependencies() {
+  super.didChangeDependencies();
+  if (!_isInitialized) {
+    _repository =
+        widget.repository ?? DependencyProvider.of(context).userRepository;
+    _isInitialized = true;
     _loadUsers();
   }
+}
 
   Future<void> _loadUsers() async {
     setState(() {
