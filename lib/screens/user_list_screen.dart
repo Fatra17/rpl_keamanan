@@ -3,6 +3,7 @@ import '../models/user.dart';
 import '../repositories/user_repository.dart';
 import '../repositories/user_repository_impl.dart';
 import '../widgets/user_card.dart';
+import '../config/dependency_injector.dart';
 
 /// Halaman untuk menampilkan daftar pengguna.
 ///
